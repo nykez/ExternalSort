@@ -121,86 +121,33 @@ namespace Algor_Project4
 
             int counter = 0;
 
+            // Merge Files:
             while (true)
             {
-                for (int jumpIndex = 0; jumpIndex < TOTAL_JUMPS; jumpIndex++)
-                {
-
-                    // Open our file pointers
-                    for (int i = 0; i < MERGE_K; i++)
-                    {
-                        Console.WriteLine($"Opening file {counter}");
-                        // Create our K arrays
-                        binStructs[i] = new BinStruct(jumpIndex, new BinaryFile("data_" + counter + ".bin", false));
-
-                        counter++;
-                    }
 
 
-                    // Create our new file writer pointer
-                    BinaryWriter binaryWriter = new BinaryWriter(File.Open("data_" + FileCounter + ".bin", FileMode.OpenOrCreate));
-
-
-                    while (binStructs[0].file.binInFile.PeekChar() != -1)
-                    {
-
-                        for (int i = 0; i < MERGE_K; i++)
-                        {
-                            Console.WriteLine($"File Size: {binStructs[i].file.binInFile.BaseStream.Length}");
-                            int data = binStructs[i].file.binInFile.ReadInt32();
-                            fileHeap.Insert(data);
-                        }
-
-                        int value = fileHeap.ExtractMin();
-                        Console.WriteLine($"Value {value}");
-                        binaryWriter.Write(value);
-                    }
-
-                    // Process rest of heap?
-                    while (fileHeap.Count > 0)
-                    {
-                        int value = fileHeap.ExtractMin();
-                        Console.WriteLine($"Value {value}");
-                        binaryWriter.Write(value);
-                    }
-
-                    Console.WriteLine();
-
-
-                    binaryWriter.Close();
-                    FileCounter++;
-
-
-                    // Close our file pointers
-                    for (int i = 0; i < MERGE_K; i++)
-                    {
-                        // Close our files
-                        binStructs[i].file.Close();
-
-                    }
-
-                }
 
                 TOTAL_JUMPS = TOTAL_JUMPS / 2;
 
                 if (TOTAL_JUMPS <= 0)
                 {
-                    Console.WriteLine($"Total Jumps {TOTAL_JUMPS}");
                     break;
                 }
             }
 
-            BinaryReader bwBinaryReader = new BinaryReader(File.Open("data_" + (FileCounter-1) + ".bin", FileMode.OpenOrCreate));
-
-
-            int newCount = 0;
-            while (bwBinaryReader.PeekChar() != -1)
+            if (bDisplayValues)
             {
-                Console.WriteLine($"[{newCount}] - {bwBinaryReader.ReadInt32()}");
-                newCount++;
-            }
+                BinaryReader bwBinaryReader = new BinaryReader(File.Open("data_" + (FileCounter - 1) + ".bin", FileMode.OpenOrCreate));
 
-            bwBinaryReader.Close();
+                int newCount = 0;
+                while (bwBinaryReader.PeekChar() != -1)
+                {
+                    Console.WriteLine($"[{newCount}] - {bwBinaryReader.ReadInt32()}");
+                    newCount++;
+                }
+
+                bwBinaryReader.Close();
+            }
 
             // Cleanup
             CleanupFiles(FileCounter);

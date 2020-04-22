@@ -13,9 +13,12 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+<<<<<<< HEAD
+=======
 # Mono auto generated files
 mono_crash.*
 
+>>>>>>> b2ac6e5a62e97a71fc577d3aade96fbf653adf2e
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -29,7 +32,10 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+<<<<<<< HEAD
+=======
 [Ll]ogs/
+>>>>>>> b2ac6e5a62e97a71fc577d3aade96fbf653adf2e
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -43,10 +49,16 @@ Generated\ Files/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+<<<<<<< HEAD
+# NUNIT
+*.VisualState.xml
+TestResult.xml
+=======
 # NUnit
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+>>>>>>> b2ac6e5a62e97a71fc577d3aade96fbf653adf2e
 
 # Build Results of an ATL Project
 [Dd]ebugPS/
@@ -127,6 +139,12 @@ _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
 
+<<<<<<< HEAD
+# JustCode is a .NET coding add-in
+.JustCode
+
+=======
+>>>>>>> b2ac6e5a62e97a71fc577d3aade96fbf653adf2e
 # TeamCity is a build add-in
 _TeamCity*
 
@@ -184,8 +202,11 @@ PublishScripts/
 
 # NuGet Packages
 *.nupkg
+<<<<<<< HEAD
+=======
 # NuGet Symbol Packages
 *.snupkg
+>>>>>>> b2ac6e5a62e97a71fc577d3aade96fbf653adf2e
 # The packages folder can be ignored because of Package Restore
 **/[Pp]ackages/*
 # except build/, which is used as an MSBuild target.
@@ -210,8 +231,11 @@ BundleArtifacts/
 Package.StoreAssociation.xml
 _pkginfo.txt
 *.appx
+<<<<<<< HEAD
+=======
 *.appxbundle
 *.appxupload
+>>>>>>> b2ac6e5a62e97a71fc577d3aade96fbf653adf2e
 
 # Visual Studio cache files
 # files ending in .cache can be ignored
@@ -261,9 +285,13 @@ ServiceFabricBackup/
 *.bim.layout
 *.bim_*.settings
 *.rptproj.rsuser
+<<<<<<< HEAD
+*- Backup*.rdl
+=======
 *- [Bb]ackup.rdl
 *- [Bb]ackup ([0-9]).rdl
 *- [Bb]ackup ([0-9][0-9]).rdl
+>>>>>>> b2ac6e5a62e97a71fc577d3aade96fbf653adf2e
 
 # Microsoft Fakes
 FakesAssemblies/
@@ -299,6 +327,13 @@ paket-files/
 # FAKE - F# Make
 .fake/
 
+<<<<<<< HEAD
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+=======
+>>>>>>> b2ac6e5a62e97a71fc577d3aade96fbf653adf2e
 # CodeRush personal settings
 .cr/personal
 
@@ -341,6 +376,9 @@ ASALocalRun/
 .localhistory/
 
 # BeatPulse healthcheck temp database
+<<<<<<< HEAD
+healthchecksdb
+=======
 healthchecksdb
 
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
@@ -348,3 +386,4 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+>>>>>>> b2ac6e5a62e97a71fc577d3aade96fbf653adf2e

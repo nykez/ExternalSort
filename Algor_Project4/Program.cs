@@ -9,14 +9,20 @@ using System.Windows.Forms;
 namespace Algor_Project4
 {
 
-    public struct BinStruct
+    public struct BinStruct: IComparable<BinStruct>
     {
         public int id;
         public BinaryFile file;
-        public BinStruct(int num, BinaryFile bFile)
+        public BinStruct(BinaryFile bFile)
         {
-            id = num;
+            id = -1;
             file = bFile;
+        }
+
+        public int CompareTo(BinStruct objBinStruct)
+        {
+            return id.CompareTo(objBinStruct.id);
+
         }
     }
 
@@ -124,8 +130,55 @@ namespace Algor_Project4
             // Merge Files:
             while (true)
             {
+                for (int jumpIndex = 0; jumpIndex < TOTAL_JUMPS; jumpIndex++)
+                {
+                    
+
+                    for (int i = 0; i < MERGE_K; i++)
+                    {
+                        // Build our struct
+                        binStructs[i] = new BinStruct(new BinaryFile("data_" + counter + ".bin", false));
+                        counter++;
+                    }
 
 
+                    BinaryWriter binaryWriter =
+                        new BinaryWriter(File.Open("data_" + FileCounter + ".bin", FileMode.OpenOrCreate));
+
+                    
+
+                    while (binStructs[0].file.Peek() != -1)
+                    {
+                        for (int i = 0; i < MERGE_K; i++)
+                        {
+                            // Queue all our rows
+                            binStructs[i].id = binStructs[i].file.binInFile.ReadInt32();
+                            //Console.WriteLine(binStructs[i].id);
+                            fileHeap.Insert(binStructs[i].id);
+                        }
+
+                        binaryWriter.Write(fileHeap.ExtractMin());
+                    }
+
+                    while (fileHeap.Count > 0)
+                    {
+                        binaryWriter.Write(fileHeap.ExtractMin());
+                    }
+
+                    Console.WriteLine($"{FileCounter} : {binaryWriter.BaseStream.Length} bytes Heap: {fileHeap.Count}");
+
+                    binaryWriter.Close();
+                    FileCounter++;
+                    fileHeap.Flush();
+
+
+                    // Close our files
+                    for (int i = 0; i < MERGE_K; i++)
+                    {
+                        // Build our struct
+                        binStructs[i].file.Close();
+                    }
+                }
 
                 TOTAL_JUMPS = TOTAL_JUMPS / 2;
 
@@ -135,6 +188,7 @@ namespace Algor_Project4
                 }
             }
 
+            // Display our final sorted file values:
             if (bDisplayValues)
             {
                 BinaryReader bwBinaryReader = new BinaryReader(File.Open("data_" + (FileCounter - 1) + ".bin", FileMode.OpenOrCreate));

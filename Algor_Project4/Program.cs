@@ -130,6 +130,8 @@ namespace Algor_Project4
             // Merge Files:
             while (true)
             {
+                Console.WriteLine($"Jumps to do: {TOTAL_JUMPS}");
+                
                 for (int jumpIndex = 0; jumpIndex < TOTAL_JUMPS; jumpIndex++)
                 {
                     
@@ -180,12 +182,13 @@ namespace Algor_Project4
                     }
                 }
 
-                TOTAL_JUMPS = TOTAL_JUMPS / 2;
 
                 if (TOTAL_JUMPS <= 0)
                 {
                     break;
                 }
+
+                TOTAL_JUMPS = TOTAL_JUMPS / 2;
             }
 
             // Display our final sorted file values:

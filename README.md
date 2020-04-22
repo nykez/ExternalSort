@@ -18,3 +18,7 @@
                4d) Extract the top node from the min heap, writing the int of that node into the output file.  Read in from the binary file of the node (just extracted) the next record and insert that into the min heap.  If the node (just extracted) has reached the end of file, then reduce5) Repeat 4 until there is one file, the sorted file. 
 
 6) Delete the temp files with only the sorted file remaining.  Give a option not to display the sorted file, because we will be using large files which take a very long time to display.
+
+
+Test Case: 300.bin h=1, k=2
+Test Case: 10,000,000 bin h=9999 k=7, under 2 minutes

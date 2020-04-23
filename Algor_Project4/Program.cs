@@ -9,24 +9,6 @@ using System.Windows.Forms;
 namespace Algor_Project4
 {
 
-    public struct BinStruct: IComparable<BinStruct>
-    {
-        public int id;
-        public BinaryFile file;
-        public BinStruct(BinaryFile bFile)
-        {
-            id = -1;
-            file = bFile;
-        }
-
-        public int CompareTo(BinStruct objBinStruct)
-        {
-            return id.CompareTo(objBinStruct.id);
-
-        }
-    }
-
-
     class Program
     {
         [STAThread]
@@ -118,7 +100,7 @@ namespace Algor_Project4
 
             BinStruct[] binStructs = new BinStruct[MERGE_K];
 
-            Heap<int> fileHeap = new Heap<int>();
+            Heap<BinStruct> fileHeap = new Heap<BinStruct>();
 
             int TOTAL_JUMPS = FileCounter / 2;
             //
@@ -140,7 +122,11 @@ namespace Algor_Project4
                     for (int i = 0; i < MERGE_K; i++)
                     {
                         // Build our struct
+                        
                         binStructs[i] = new BinStruct(new BinaryFile("data_" + counter + ".bin", false));
+                        binStructs[i].id = binStructs[i].file.binInFile.ReadInt32();
+                        Console.WriteLine($"Opening file #{counter} - {binStructs[i].file.binInFile.BaseStream.Length}bytes (Position: {binStructs[i].file.binInFile.BaseStream.Position})");
+                        fileHeap.Insert(binStructs[i]);
                         counter++;
                     }
 
@@ -148,24 +134,43 @@ namespace Algor_Project4
                     BinaryWriter binaryWriter =
                         new BinaryWriter(File.Open("data_" + FileCounter + ".bin", FileMode.OpenOrCreate));
 
-                    
 
-                    while (binStructs[0].file.Peek() != -1)
+
+                    // PROBLEM LIES HERE
+                    // Next File is being read even tho it shouldn't be read yet.
+                    int badFile = 0;
+                    while (true)
                     {
-                        for (int i = 0; i < MERGE_K; i++)
+                        // Break when all files have been read to the end
+                        if (badFile == MERGE_K)
                         {
-                            // Queue all our rows
-                            binStructs[i].id = binStructs[i].file.binInFile.ReadInt32();
-                            //Console.WriteLine(binStructs[i].id);
-                            fileHeap.Insert(binStructs[i].id);
+                            break;
                         }
 
-                        binaryWriter.Write(fileHeap.ExtractMin());
+                        BinStruct value = fileHeap.ExtractMin();
+                        binaryWriter.Write(value.id);
+                        // Read next int
+
+                        
+                        if (value.file.binInFile.BaseStream.Position == value.file.binInFile.BaseStream.Length)
+                        {
+                            Console.WriteLine($"\t {value.file.binInFile.BaseStream.Position} - {value.file.binInFile.BaseStream.Length}");
+                            badFile++;
+                            continue;
+                        }
+
+
+                        value.id = value.file.binInFile.ReadInt32();
+
+                        fileHeap.Insert(value);
+
                     }
 
                     while (fileHeap.Count > 0)
                     {
-                        binaryWriter.Write(fileHeap.ExtractMin());
+                        BinStruct value = fileHeap.ExtractMin();
+                        Console.WriteLine(value.id);
+                        binaryWriter.Write(value.id);
                     }
 
                     Console.WriteLine($"{FileCounter} : {binaryWriter.BaseStream.Length} bytes Heap: {fileHeap.Count}");
@@ -190,6 +195,7 @@ namespace Algor_Project4
                 }
 
                 TOTAL_JUMPS = TOTAL_JUMPS / 2;
+
             }
 
             // Display our final sorted file values:
@@ -210,7 +216,6 @@ namespace Algor_Project4
             // Cleanup
             CleanupFiles(FileCounter);
 
-            
 
             Console.ReadLine();
         }
@@ -218,7 +223,7 @@ namespace Algor_Project4
         public static void CleanupFiles(int amount)
         {
             // Delete all files but the last, that's our fully sorted file.
-            for (int i = 0; i < amount-1; i++)
+            for (int i = 0; i < amount-2; i++)
             {
                 File.Delete("data_" + i + ".bin");
             }

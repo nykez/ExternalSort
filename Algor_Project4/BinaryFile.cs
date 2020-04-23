@@ -61,6 +61,7 @@ namespace Algor_Project4
         {
             return binInFile.PeekChar();
         }
+
             
 
         // Close whichever file

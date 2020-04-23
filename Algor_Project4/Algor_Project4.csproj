@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryFile.cs" />
+    <Compile Include="BinaryStructure.cs" />
     <Compile Include="Heap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
